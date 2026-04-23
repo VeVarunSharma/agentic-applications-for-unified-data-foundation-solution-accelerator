@@ -17,7 +17,7 @@ export function getChatLandingText() {
   return getRuntimeConfigValue(
     "CHAT_LANDING_TEXT",
     "REACT_APP_CHAT_LANDING_TEXT",
-    "You can ask questions around sales, products and orders."
+    "Ask questions about patient admissions, clinical orders, service line performance, and institutional policies — powered by Azure AI Foundry with full data sovereignty compliance."
   );
 }
 
