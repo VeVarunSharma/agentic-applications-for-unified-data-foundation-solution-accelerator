@@ -4,7 +4,16 @@ import {
   Textarea,
   Subtitle2,
   Body1,
+  Body2,
+  Caption1,
 } from "@fluentui/react-components";
+import {
+  ShieldCheckmark24Regular,
+  Timer24Regular,
+  Database24Regular,
+  Home24Regular,
+  LightbulbFilament24Regular,
+} from "@fluentui/react-icons";
 import "./Chat.css";
 import { DefaultButton, Spinner, SpinnerSize } from "@fluentui/react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -54,6 +63,36 @@ const [ASSISTANT, ERROR, USER] = ["assistant", "error", "user"];
 
 const chatLandingText = getChatLandingText();
 
+const SAMPLE_PROMPTS = [
+  {
+    category: "Clinical Outcomes",
+    icon: "🏥",
+    prompts: [
+      "Show me septicemia admissions where length of stay exceeded the DRG arithmetic mean",
+      "What are the top 5 service lines by total admissions?",
+      "Which providers have the highest average length of stay delta?",
+    ],
+  },
+  {
+    category: "Compliance & Policy",
+    icon: "🛡️",
+    prompts: [
+      "What is the Clearwater Health Authority policy for emergency admissions?",
+      "What authorization requirements exist for controlled substance orders?",
+      "When does an admission trigger a case management review?",
+    ],
+  },
+  {
+    category: "Cost & Operations",
+    icon: "📊",
+    prompts: [
+      "Show total charges vs total cost by primary payor",
+      "What are the most common DRG codes and their average costs?",
+      "Which service lines have the highest variable direct costs?",
+    ],
+  },
+];
+
 const Chat: React.FC<ChatProps> = ({
   onHandlePanelStates,
   panelShowStates,
@@ -67,6 +106,7 @@ const Chat: React.FC<ChatProps> = ({
   const { isFetchingConvMessages, isHistoryUpdateAPIPending } = useAppSelector((state) => state.chatHistory);
   const questionInputRef = useRef<HTMLTextAreaElement>(null);
   const [isChartLoading, setIsChartLoading] = useState(false);
+  const [showPrompts, setShowPrompts] = useState(false);
   const abortFuncs = useRef([] as AbortController[]);
   const chatMessageStreamEnd = useRef<HTMLDivElement | null>(null);
   
@@ -342,7 +382,7 @@ const Chat: React.FC<ChatProps> = ({
   ) => {
     if (generatingResponse || !question.trim()) return;
     
-    const isChatReq = isChartQuery(userMessage) ? "graph" : "Text";
+    const isChatReq = isChartQuery(question) ? "graph" : "Text";
     const newMessage: ChatMessage = {
       id: generateUUIDv4(),
       role: USER,
@@ -363,7 +403,7 @@ const Chat: React.FC<ChatProps> = ({
 
     const request: ConversationRequest = {
       id: conversationId,
-      query: userMessage
+      query: question
     };
 
     const streamMessage: ChatMessage = {
@@ -584,18 +624,65 @@ const Chat: React.FC<ChatProps> = ({
   return (
     <div className="chat-container">
       <div className="chat-header">
-        <Subtitle2>Chat</Subtitle2>
-        <span>
+        <div className="chat-header-left">
+          <Button
+            appearance="subtle"
+            icon={<Home24Regular />}
+            onClick={onNewConversation}
+            title="Back to Home"
+            size="small"
+          />
+          <Subtitle2>Chat</Subtitle2>
+        </div>
+        <span className="chat-header-right">
+          <Button
+            appearance={showPrompts ? "primary" : "outline"}
+            icon={<LightbulbFilament24Regular />}
+            onClick={() => setShowPrompts(!showPrompts)}
+            size="small"
+            title="Toggle suggested prompts"
+          >
+            Prompts
+          </Button>
           <Button
             appearance="outline"
             onClick={() => onHandlePanelStates(panels.CHATHISTORY)}
             className="hide-chat-history"
+            size="small"
           >
             {`${panelShowStates?.[panels.CHATHISTORY] ? "Hide" : "Show"
               } Chat History`}
           </Button>
         </span>
       </div>
+      {showPrompts && hasMessages && (
+        <div className="prompts-drawer">
+          {SAMPLE_PROMPTS.map((group) => (
+            <div key={group.category} className="prompts-drawer-category">
+              <Caption1 className="prompts-drawer-label">{group.icon} {group.category}</Caption1>
+              <div className="prompts-drawer-list">
+                {group.prompts.map((prompt) => (
+                  <button
+                    key={prompt}
+                    className="prompts-drawer-btn"
+                    onClick={() => {
+                      const convId = currentConversationId || generateUUIDv4();
+                      setUserMessage(prompt);
+                      setShowPrompts(false);
+                      setTimeout(() => {
+                        makeApiRequestWithCosmosDB(prompt, convId);
+                      }, 150);
+                    }}
+                    disabled={isInputDisabled}
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
       <div className="chat-messages">
         {Boolean(isFetchingConvMessages) && (
           <div style={{ 
@@ -612,12 +699,53 @@ const Chat: React.FC<ChatProps> = ({
           </div>
         )}
         {!isFetchingConvMessages && !hasMessages && (
-          <div className="initial-msg">
-            <h2>✨</h2>
-            <Subtitle2>Start Chatting</Subtitle2>
-            <Body1 style={{ textAlign: "center" }}>
-              {chatLandingText}
-            </Body1>
+          <div className="landing-container">
+            <div className="landing-header">
+              <h2 style={{ margin: 0, fontSize: "1.5em" }}>🏥</h2>
+              <Subtitle2>Clearwater Health Authority</Subtitle2>
+              <Body1 style={{ textAlign: "center", maxWidth: "500px" }}>
+                {chatLandingText}
+              </Body1>
+              <div className="compliance-badges">
+                <span className="compliance-badge">
+                  <ShieldCheckmark24Regular style={{ fontSize: "14px" }} />
+                  PIPEDA &amp; HIA Compliant
+                </span>
+                <span className="compliance-badge">
+                  <Database24Regular style={{ fontSize: "14px" }} />
+                  Canada Data Residency
+                </span>
+                <span className="compliance-badge">
+                  <Timer24Regular style={{ fontSize: "14px" }} />
+                  Real-time Clinical Insights
+                </span>
+              </div>
+            </div>
+            <div className="sample-prompts-grid">
+              {SAMPLE_PROMPTS.map((group) => (
+                <div key={group.category} className="prompt-category">
+                  <Caption1 className="prompt-category-title">
+                    {group.icon} {group.category}
+                  </Caption1>
+                  {group.prompts.map((prompt) => (
+                    <button
+                      key={prompt}
+                      className="sample-prompt-btn"
+                      onClick={() => {
+                        const convId = currentConversationId || generateUUIDv4();
+                        setUserMessage(prompt);
+                        setTimeout(() => {
+                          makeApiRequestWithCosmosDB(prompt, convId);
+                        }, 150);
+                      }}
+                      disabled={isInputDisabled}
+                    >
+                      <Body2>{prompt}</Body2>
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         )}
         {!isFetchingConvMessages &&
@@ -663,7 +791,7 @@ const Chat: React.FC<ChatProps> = ({
             className="textarea-field"
             value={userMessage}
             onChange={(e, data) => setUserMessage(data.value || "")}
-            placeholder="Ask a question..."
+            placeholder="Ask about admissions, clinical orders, policies, or service lines..."
             onKeyDown={handleKeyDown}
             ref={questionInputRef}
             rows={2}

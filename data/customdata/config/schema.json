@@ -1,0 +1,213 @@
+{
+  "name": "Hospital admissions analytics and clinical order management for Clearwater Health Authority",
+  "description": "Hospital admissions analytics and clinical order management for Clearwater Health Authority",
+  "tables": {
+    "admissions": {
+      "columns": [
+        {
+          "name": "Admission",
+          "type": "BigInt"
+        },
+        {
+          "name": "Primary Contact",
+          "type": "BigInt"
+        },
+        {
+          "name": "Admit Time",
+          "type": "DateTime"
+        },
+        {
+          "name": "Discharge Time",
+          "type": "DateTime"
+        },
+        {
+          "name": "Hours",
+          "type": "BigInt"
+        },
+        {
+          "name": "Dx Code",
+          "type": "String"
+        },
+        {
+          "name": "Diagnosis",
+          "type": "String"
+        },
+        {
+          "name": "Attending Provider",
+          "type": "BigInt"
+        },
+        {
+          "name": "Admitting Provider",
+          "type": "BigInt"
+        },
+        {
+          "name": "Discharge Department",
+          "type": "String"
+        },
+        {
+          "name": "Total Charges",
+          "type": "String"
+        },
+        {
+          "name": "Total Cost",
+          "type": "String"
+        },
+        {
+          "name": "Fixed Indirect Cost",
+          "type": "String"
+        },
+        {
+          "name": "Fixed Direct Cost",
+          "type": "String"
+        },
+        {
+          "name": "Variable Indirect Cost",
+          "type": "String"
+        },
+        {
+          "name": "Variable Direct Cost",
+          "type": "String"
+        },
+        {
+          "name": "Admitting Provider Name",
+          "type": "String"
+        },
+        {
+          "name": "Admitting Provider Specialty",
+          "type": "String"
+        },
+        {
+          "name": "Admitting Provider Type",
+          "type": "String"
+        },
+        {
+          "name": "Attending Provider Name",
+          "type": "String"
+        },
+        {
+          "name": "Attending Provider Specialty",
+          "type": "String"
+        },
+        {
+          "name": "Attending Provider Type",
+          "type": "String"
+        },
+        {
+          "name": "DRG",
+          "type": "BigInt"
+        },
+        {
+          "name": "DOB",
+          "type": "DateTime"
+        },
+        {
+          "name": "GENDER",
+          "type": "String"
+        },
+        {
+          "name": "ZIP",
+          "type": "BigInt"
+        },
+        {
+          "name": "Primary Payor",
+          "type": "String"
+        },
+        {
+          "name": "Arithmetic Mean Length Of Stay",
+          "type": "Float"
+        },
+        {
+          "name": "DRG Title",
+          "type": "String"
+        },
+        {
+          "name": "AGE",
+          "type": "BigInt"
+        },
+        {
+          "name": "Delta to Arithmetic Mean Length Of Stay",
+          "type": "Float"
+        },
+        {
+          "name": "Service Line",
+          "type": "String"
+        },
+        {
+          "name": "Days",
+          "type": "Float"
+        }
+      ],
+      "key": "Admission"
+    },
+    "healthorders": {
+      "columns": [
+        {
+          "name": "Admission",
+          "type": "BigInt"
+        },
+        {
+          "name": "OrderID",
+          "type": "BigInt"
+        },
+        {
+          "name": "Order",
+          "type": "String"
+        },
+        {
+          "name": "OrderSet",
+          "type": "String"
+        },
+        {
+          "name": "OrderType",
+          "type": "String"
+        },
+        {
+          "name": "OrderStatus",
+          "type": "String"
+        },
+        {
+          "name": "OrderSource",
+          "type": "String"
+        },
+        {
+          "name": "OrderMode",
+          "type": "String"
+        },
+        {
+          "name": "OrderingProvider",
+          "type": "BigInt"
+        },
+        {
+          "name": "AuthorizingProvider",
+          "type": "BigInt"
+        },
+        {
+          "name": "OrderingProviderName",
+          "type": "String"
+        },
+        {
+          "name": "OrderingProviderSpecialty",
+          "type": "String"
+        },
+        {
+          "name": "OrderingProviderType",
+          "type": "String"
+        },
+        {
+          "name": "AuthorizingProviderName",
+          "type": "String"
+        },
+        {
+          "name": "AuthorizingProviderSpecialty",
+          "type": "String"
+        },
+        {
+          "name": "AuthorizingProviderType",
+          "type": "String"
+        }
+      ],
+      "key": "Admission"
+    }
+  },
+  "relationships": []
+}

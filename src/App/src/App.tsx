@@ -1,12 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
 import Chat from "./components/Chat/Chat";
+import Architecture from "./components/Architecture/Architecture";
 import {
   FluentProvider,
   Subtitle2,
   Body2,
   webLightTheme,
   Avatar,
+  Button,
+  Tooltip,
 } from "@fluentui/react-components";
+import {
+  Info24Regular,
+  Chat24Regular,
+} from "@fluentui/react-icons";
 import "./App.css";
 import { ChatHistoryPanel } from "./components/ChatHistoryPanel/ChatHistoryPanel";
 
@@ -23,6 +30,8 @@ import { setMessages, clearChat } from "./store/chatSlice";
 import { AppLogo } from "./components/Svg/Svg";
 import CustomSpinner from "./components/CustomSpinner/CustomSpinner";
 import CitationPanel from "./components/CitationPanel/CitationPanel";
+type Page = "chat" | "architecture";
+
 const panels = {
   CHAT: "CHAT",
   CHATHISTORY: "CHATHISTORY",
@@ -59,6 +68,7 @@ const Dashboard: React.FC = () => {
   const OFFSET_INCREMENT = 25;
   const [hasMoreRecords, setHasMoreRecords] = useState<boolean>(true);
   const [name, setName] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<Page>("chat");
   const isInitialFetchStarted = useRef(false);
 
   useEffect(() => {
@@ -200,15 +210,30 @@ const Dashboard: React.FC = () => {
         <div className="header-left-section">
           <AppLogo />
           <Subtitle2>
-            Contoso <Body2 style={{ gap: "10px" }}>| Unified Data Analysis Agents</Body2>
+            Clearwater Health Authority <Body2 style={{ gap: "10px" }}>| Clinical Intelligence Agent</Body2>
           </Subtitle2>
         </div>
         <div className="header-right-section">
+          <Tooltip
+            content={currentPage === "chat" ? "Architecture" : "Back to Chat"}
+            relationship="label"
+          >
+            <Button
+              appearance="subtle"
+              icon={currentPage === "chat" ? <Info24Regular /> : <Chat24Regular />}
+              onClick={() =>
+                setCurrentPage(currentPage === "chat" ? "architecture" : "chat")
+              }
+            />
+          </Tooltip>
           <div>
             <Avatar name={name} title={name} />
           </div>
         </div>
       </div>
+      {currentPage === "architecture" ? (
+        <Architecture onBack={() => setCurrentPage("chat")} />
+      ) : (
       <div className="main-container">
         {/* LEFT PANEL:  CHAT */}
         {panelShowStates?.[panels.CHAT] && (
@@ -259,6 +284,7 @@ const Dashboard: React.FC = () => {
             </div>
           )}
       </div>
+      )}
     </FluentProvider>
   );
 };

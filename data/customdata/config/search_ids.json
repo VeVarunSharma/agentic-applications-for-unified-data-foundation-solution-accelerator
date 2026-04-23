@@ -1,0 +1,12 @@
+{
+  "index_name": "knowledge_index",
+  "knowledge_base_name": "clearwater4s75m-kb",
+  "knowledge_source_name": "clearwater4s75m-ks",
+  "document_count": 18,
+  "pdf_files": [
+    "admissions_policy.pdf",
+    "service_line_guidelines.pdf",
+    "data_summary_report.pdf",
+    "clinical_orders_protocol.pdf"
+  ]
+}
