@@ -1,0 +1,12 @@
+{
+  "index_name": "knowledge_index",
+  "knowledge_base_name": "clearwatercawsit7-kb",
+  "knowledge_source_name": "clearwatercawsit7-ks",
+  "document_count": 18,
+  "pdf_files": [
+    "admissions_policy.pdf",
+    "service_line_guidelines.pdf",
+    "data_summary_report.pdf",
+    "clinical_orders_protocol.pdf"
+  ]
+}

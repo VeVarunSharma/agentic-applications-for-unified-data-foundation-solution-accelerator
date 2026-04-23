@@ -1,0 +1,14 @@
+{
+  "chat_agent_id": "ChatAgent",
+  "chat_agent_name": "ChatAgent",
+  "title_agent_id": "TitleAgent",
+  "title_agent_name": "TitleAgent",
+  "search_index": "knowledge_index",
+  "search_mode": "knowledge_base",
+  "knowledge_base_name": "clearwatercawsit7-kb",
+  "mcp_connection_name": "clearwatercawsit7-kb-mcp-connection",
+  "search_endpoint": "https://srch-clearwatercawsit7.search.windows.net",
+  "sql_mode": "fabric",
+  "sql_server": "placeholder-pending",
+  "sql_database": "clearwater_health_db"
+}

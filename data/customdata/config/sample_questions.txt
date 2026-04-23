@@ -1,0 +1,18 @@
+=== DOCUMENT QUESTIONS (Compliance/Governance — for CISO James) ===
+1. What is the Clearwater Health Authority policy for emergency admissions?
+2. What are the DRG classification rules and when is utilization review triggered?
+3. What is the clinical orders protocol for high-alert medications like oxytocin?
+4. How does Clearwater track cost breakdowns — direct vs indirect, fixed vs variable?
+5. What authorization requirements exist for controlled substance orders?
+
+=== SQL QUESTIONS (Clinical Outcomes — for CIO Dr. Mehta) ===
+1. Show me the top 10 service lines by total admissions
+2. What is the average length of stay by service line?
+3. Which admissions exceeded the DRG arithmetic mean length of stay by more than 3 days?
+4. Show me total charges vs total cost by primary payor
+5. What are the most common diagnoses in General Medicine admissions?
+
+=== COMBINED INSIGHT QUESTIONS (Both stakeholders) ===
+1. Based on our admissions policy, which admissions exceeded the 3-day delta threshold requiring case management review?
+2. According to the service line guidelines, what performance metrics should we track for Obstetrics — and how does our data look?
+3. Are there any septicemia admissions where the attending provider specialty doesn't match the service line expectations?

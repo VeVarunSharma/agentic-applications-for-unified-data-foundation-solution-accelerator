@@ -1,0 +1,9 @@
+=== DATABASE SCHEMA ===
+
+admissions(Admission*:int, Primary Contact:int, Admit Time:date, Discharge Time:date, Hours:int, Dx Code:str, Diagnosis:str, Attending Provider:int, Admitting Provider:int, Discharge Department:str, Total Charges:str, Total Cost:str, Fixed Indirect Cost:str, Fixed Direct Cost:str, Variable Indirect Cost:str, Variable Direct Cost:str, Admitting Provider Name:str, Admitting Provider Specialty:str, Admitting Provider Type:str, Attending Provider Name:str, Attending Provider Specialty:str, Attending Provider Type:str, DRG:int, DOB:date, GENDER:str, ZIP:int, Primary Payor:str, Arithmetic Mean Length Of Stay:flo, DRG Title:str, AGE:int, Delta to Arithmetic Mean Length Of Stay:flo, Service Line:str, Days:flo)
+healthorders(Admission*:int, OrderID:int, Order:str, OrderSet:str, OrderType:str, OrderStatus:str, OrderSource:str, OrderMode:str, OrderingProvider:int, AuthorizingProvider:int, OrderingProviderName:str, OrderingProviderSpecialty:str, OrderingProviderType:str, AuthorizingProviderName:str, AuthorizingProviderSpecialty:str, AuthorizingProviderType:str)
+
+RULES:
+- Use T-SQL syntax
+- Key columns marked with *
+- Types: str=string, int=integer, num=decimal
